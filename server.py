@@ -68,7 +68,11 @@ class SigandjiHandler(http.server.SimpleHTTPRequestHandler):
         parsed = urllib.parse.urlparse(self.path)
         path = urllib.parse.unquote(parsed.path)
 
-        if path == "/api/files":
+        if path == "/index.html":
+            self.send_response(301)
+            self.send_header("Location", "/")
+            self.end_headers()
+        elif path == "/api/files":
             self.handle_list_files()
         elif path.startswith("/api/pdf/"):
             self.handle_serve_pdf(path)
